@@ -6,7 +6,7 @@ main { height: 100vh; height: 100dvh; min-height: 280px; display: flex; flex-dir
 .track { display: flex; height: 100%; transition: transform 360ms cubic-bezier(.22,.68,.22,1); will-change: transform; }
 .slide { flex: 0 0 100%; min-width: 0; height: 100%; display: flex; align-items: center; justify-content: center; padding: 8px 12px 0; }
 .card { position: relative; height: 100%; max-width: 100%; aspect-ratio: 2 / 3; }
-img { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; }
+img { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; -webkit-touch-callout: none; }
 .phone { position: absolute; left: 4.2%; width: 91.6%; border-radius: 8px; }
 .phone:focus-visible { outline: 3px solid #142947; outline-offset: -3px; background: #ffd66633; }
 .phone:active { background: #ffffff33; }

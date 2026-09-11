@@ -39,9 +39,53 @@ document.addEventListener('keydown', e => {
   if (e.key === 'End') { e.preventDefault(); go(4); }
 });
 let start = null;
+let touchStart = null;
+let ignoreMouseUntil = 0;
 let suppressClickUntil = 0;
 viewport.addEventListener('dragstart', e => e.preventDefault());
+function finishSwipe(origin, x, y) {
+  const dx = x - origin.x, dy = y - origin.y;
+  if (Math.abs(dx) >= 30 && Math.abs(dx) > Math.abs(dy) * 1.2) {
+    suppressClickUntil = Date.now() + 700;
+    go(current + (dx < 0 ? 1 : -1));
+  }
+}
+// Handle native touch separately: some in-app browsers cancel pointer gestures.
+viewport.addEventListener('touchstart', e => {
+  start = null;
+  ignoreMouseUntil = Date.now() + 1000;
+  if (e.touches.length !== 1) { touchStart = null; return; }
+  const t = e.touches[0];
+  touchStart = { x: t.clientX, y: t.clientY, id: t.identifier, axis: null };
+}, { passive: true });
+viewport.addEventListener('touchmove', e => {
+  if (!touchStart) return;
+  if (e.touches.length !== 1) { touchStart = null; return; }
+  const t = e.touches[0];
+  if (t.identifier !== touchStart.id) return;
+  const dx = Math.abs(t.clientX - touchStart.x), dy = Math.abs(t.clientY - touchStart.y);
+  if (!touchStart.axis && Math.max(dx, dy) > 10) {
+    touchStart.axis = dx > dy * 1.2 ? 'horizontal' : 'vertical';
+  }
+  if (touchStart.axis === 'horizontal') {
+    if (e.cancelable) e.preventDefault();
+    suppressClickUntil = Date.now() + 700;
+  }
+}, { passive: false });
+viewport.addEventListener('touchend', e => {
+  ignoreMouseUntil = Date.now() + 1000;
+  if (!touchStart) return;
+  const origin = touchStart;
+  touchStart = null;
+  if (e.touches.length || origin.axis === 'vertical') return;
+  const t = Array.from(e.changedTouches).find(t => t.identifier === origin.id);
+  if (!t) return;
+  if (origin.axis === 'horizontal' && e.cancelable) e.preventDefault();
+  finishSwipe(origin, t.clientX, t.clientY);
+}, { passive: false });
+viewport.addEventListener('touchcancel', () => { touchStart = null; });
 viewport.addEventListener('pointerdown', e => {
+  if (e.pointerType === 'touch' || Date.now() < ignoreMouseUntil) return;
   if (!e.isPrimary) { start = null; return; }
   if (e.button !== 0) return;
   start = { x: e.clientX, y: e.clientY, id: e.pointerId };
@@ -51,12 +95,9 @@ viewport.addEventListener('pointermove', e => {
 });
 window.addEventListener('pointerup', e => {
   if (!start || e.pointerId !== start.id) return;
-  const dx = e.clientX - start.x, dy = e.clientY - start.y;
+  const origin = start;
   start = null;
-  if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.3) {
-    suppressClickUntil = Date.now() + 500;
-    go(current + (dx < 0 ? 1 : -1));
-  }
+  finishSwipe(origin, e.clientX, e.clientY);
 });
 window.addEventListener('pointercancel', () => { start = null; });
 viewport.addEventListener('click', e => { if (Date.now() < suppressClickUntil) { e.preventDefault(); e.stopPropagation(); } }, true);
