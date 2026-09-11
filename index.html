@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101d32">
+  <meta name="description" content="동료 여러분께 전하는 추석 인사와 연휴 주요 연락처. 한 장씩 넘겨 보세요.">
+  <title>풍성한 한가위 되세요</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main aria-label="추석 카드북">
+    <div class="viewport" aria-roledescription="캐러셀" aria-label="추석 카드 5장" tabindex="0">
+      <div class="track">
+        <section class="slide" aria-label="1 / 5"><div class="card"><img src="01.png" width="1024" height="1536" alt="함께해 주시는 소중한 동료 여러분께 감사의 마음을 전합니다. 풍성한 한가위 되세요. 가족과 함께 웃음이 가득한 따뜻한 추석 연휴 보내시길 바랍니다." fetchpriority="high" draggable="false"></div></section>
+        <section class="slide" aria-label="2 / 5" inert><div class="card"><img src="02.png" width="1024" height="1536" alt="이번 추석에는 이런 시간을 보내보세요" draggable="false"></div></section>
+        <section class="slide" aria-label="3 / 5" inert><div class="card"><img src="03.png" width="1024" height="1536" alt="즐거운 추석, 안전이 먼저입니다" draggable="false"></div></section>
+        <section class="slide" aria-label="4 / 5" inert><div class="card"><img src="04.png" width="1024" height="1536" alt="그리고, 다시 만나요" draggable="false"></div></section>
+        <section class="slide" aria-label="5 / 5" inert><div class="card"><img src="05.png" width="1024" height="1536" alt="추석 연휴 주요 연락처. 아래 연락처를 누르면 전화 앱으로 연결됩니다. 안전하고 편안한 추석 연휴 보내세요." draggable="false">
+          <a class="phone" style="top:25.39%;height:6.84%" href="tel:119" aria-label="119 화재·구급·구조 전화"></a>
+          <a class="phone" style="top:32.94%;height:6.84%" href="tel:112" aria-label="112 경찰 전화"></a>
+          <a class="phone" style="top:40.43%;height:7.36%" href="tel:129" aria-label="129 보건복지상담센터 전화"></a>
+          <a class="phone" style="top:48.44%;height:7.10%" href="tel:120" aria-label="120 지역 민원안내 전화"></a>
+          <a class="phone" style="top:56.25%;height:7.23%" href="tel:110" aria-label="110 정부민원안내 전화"></a>
+          <a class="phone" style="top:64.19%;height:7.23%" href="tel:123" aria-label="123 한국전력 전화"></a>
+          <a class="phone" style="top:72.14%;height:7.23%" href="tel:1588-2504" aria-label="1588-2504 한국도로공사 전화"></a>
+        </div></section>
+      </div>
+    </div>
+    <footer>
+      <p class="hint" id="hint">좌우로 넘겨 보세요</p>
+      <nav aria-label="카드 이동">
+        <button id="prev" type="button" disabled aria-label="이전 카드">← 이전</button>
+        <div class="position"><div class="dots" aria-label="페이지 선택"></div><span id="counter" aria-live="polite" aria-atomic="true">1 / 5</span></div>
+        <button id="next" type="button" aria-label="다음 카드">다음 →</button>
+      </nav>
+    </footer>
+  </main>
+</body>
+</html>
