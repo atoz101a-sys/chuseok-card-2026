@@ -2,10 +2,11 @@
 * { box-sizing: border-box; }
 body { margin: 0; }
 main { height: 100vh; height: 100dvh; min-height: 280px; display: flex; flex-direction: column; padding-top: env(safe-area-inset-top); background: radial-gradient(ellipse at 50% 38%, #293d58, #101d32 75%); }
-.viewport { flex: 1; min-height: 0; overflow: hidden; touch-action: pan-y pinch-zoom; outline-offset: -3px; }
-.track { display: flex; height: 100%; transition: transform 520ms cubic-bezier(.16,1,.3,1); will-change: transform; }
-.track.dragging { transition: none; }
-.slide { flex: 0 0 100%; min-width: 0; height: 100%; display: flex; align-items: center; justify-content: center; padding: 8px 12px 0; }
+.viewport { flex: 1; min-height: 0; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; touch-action: pan-x pan-y pinch-zoom; outline-offset: -3px; }
+.viewport::-webkit-scrollbar { display: none; }
+.viewport.mouse-dragging { scroll-snap-type: none; cursor: grabbing; }
+.track { display: flex; height: 100%; }
+.slide { flex: 0 0 100%; min-width: 0; height: 100%; display: flex; align-items: center; justify-content: center; padding: 8px 12px 0; scroll-snap-align: start; scroll-snap-stop: always; }
 .card { position: relative; height: 100%; max-width: 100%; aspect-ratio: 2 / 3; }
 img { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; -webkit-user-select: none; -webkit-user-drag: none; -webkit-touch-callout: none; }
 .phone { position: absolute; left: 4.2%; width: 91.6%; border-radius: 8px; }
